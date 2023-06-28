@@ -1,25 +1,12 @@
 class Person
   attr_reader :id
+  attr_accessor :name, :age
 
-  def initiaalize(id, name: 'Unknown', age: 'nil', parent_permission: true)
-    @id = id
+  def initialize(name: 'Unknown', age: 'nil', parent_permission: true)
+    @id = Random.rand(1..1000)
     @name = name
     @age = age || 0
     @parent_permission = parent_permission
-  end
-
-  def getid; end
-
-  def getname; end
-
-  def getage; end
-
-  def setname(name)
-    @name = name
-  end
-
-  def setage(age)
-    @age = age
   end
 
   private
