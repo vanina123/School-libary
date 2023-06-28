@@ -126,7 +126,7 @@ If you like this project please give it a star ⭐ on github and kindly share
 
 ## 🙏 Acknowledgments <a name="acknowledgements"></a>
 
-I would like to thank Microverse for this project
+I would like to thank Microverse allowing us learn Ruby
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
