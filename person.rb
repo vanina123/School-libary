@@ -21,8 +21,7 @@ class Person
   def setage(age)
     @age = age
   end
-
-
+  
   private
 
   def of_age?
