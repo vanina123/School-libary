@@ -22,7 +22,6 @@ class Person
     @age = age
   end
 
-
   private
 
   def of_age?
