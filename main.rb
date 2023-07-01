@@ -1,20 +1,62 @@
-require_relative 'person'
-require_relative 'student'
-require_relative 'teacher'
-require_relative 'nameable'
+require_relative 'app'
+def display
+  {
+    1 => 'list_all_books',
+    2 => 'list_all_people',
+    3 => 'create_person',
+    4 => 'create_a_book',
+    5 => 'create_a_rental',
+    6 => 'list_all_rentals_for_a_given_person_id',
+    7 => 'quit'
+  }
+end
 
-person = Person.new(1, 20)
-puts person.can_use_services? # true
+def handle_menu_choice(choice, app)
+  menu_options = display
+  action = menu_options[choice]
+  if action
+    puts "\n========== #{action} =========="
+    app.send(action)
+  else
+    puts 'Invalid choice. Please try again.'
+  end
+end
 
-student = Student.new(2, 16, classroom) # Pass the classroom instance
-puts student.can_use_services? # true
-puts student.play_hooky # ¯\(ツ)/¯
+def exit_app
+  puts 'Exiting the app. Goodbye!'
+  exit
+end
 
-teacher = Teacher.new(3, 35, 'Math')
-puts teacher.can_use_services? # true
+def list
+  menu_options = display
+  puts "\n========== Libary App =========="
+  puts '+--------------------------------------+'
+  puts '|              DISPLAY MENU             |'
+  puts '+--------------------------------------+'
+  menu_options.each do |choice, action|
+    puts "| #{choice}. #{action} |"
+  end
+end
 
-person = Nameable.new('John Doe')
+def main
+  app = App.new
 
-decorated_person = CapitalizeDecorator.new(TrimmerDecorator.new(person))
+  list
 
-puts decorated_person.correct_name # => "John"
+  print 'Enter option: '
+
+  choice = gets.chomp.to_i
+
+  handle_menu_choice(choice, app)
+
+  # Loop until the user quits.
+  while choice != 8
+    list
+    puts 'Enter option: '
+
+    choice = gets.chomp.to_i
+
+    handle_menu_choice(choice, app)
+  end
+end
+main
