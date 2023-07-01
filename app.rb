@@ -44,7 +44,6 @@ class App
     parent_permission = gets.chomp
 
     student = Student.new(name, age, parent_permission)
-    @people << student
     puts 'Student created successfully.'
   end
 
