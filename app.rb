@@ -23,26 +23,63 @@ class App
   end
 
   def create_person
-    print 'Do you want to create a student (1) or a teacher (2)? '
+    puts 'Do you want to create a student (1) or a teacher (2)? '
     person_type = gets.chomp.to_i
-    print 'Name:'
-    name = gets.chomp
-    print 'Age:'
-    age = gets.chomp.to_i
-    if person_type == 1
-      print 'Whats the parent permission? (y/n) '
-      parent_permission = gets.chomp == 'y'
-      @people << Student.new(name, age, parent_permission)
-      puts 'Student created!'
-    elsif person_type == 2
-      print 'Specialization:'
-      specialization = gets.chomp
-      @people << Teacher.new(name, age, specialization)
-      puts 'Teacher created!'
+  
+    case person_type
+    when 1
+      create_student
+    when 2
+      create_teacher
     else
       puts 'Person not created!'
     end
   end
+  
+  def create_student
+    name = get_user_input('Name: ')
+    age = get_user_input('Age: ').to_i
+    parent_permission = get_user_input('What\'s the parent permission? (y/n) ').downcase == 'y'
+  
+    @people << Student.new(name, age, parent_permission)
+    puts 'Student created!'
+  end
+  
+  def create_teacher
+    name = get_user_input('Name: ')
+    age = get_user_input('Age: ').to_i
+    specialization = get_user_input('Specialization: ')
+  
+    @people << Teacher.new(name, age, specialization)
+    puts 'Teacher created!'
+  end
+  
+  def get_user_input(prompt)
+    print prompt
+    gets.chomp
+  end
+
+  # def create_person
+  #   print 'Do you want to create a student (1) or a teacher (2)? '
+  #   person_type = gets.chomp.to_i
+  #   print 'Name:'
+  #   name = gets.chomp
+  #   print 'Age:'
+  #   age = gets.chomp.to_i
+  #   if person_type == 1
+  #     print 'Whats the parent permission? (y/n) '
+  #     parent_permission = gets.chomp == 'y'
+  #     @people << Student.new(name, age, parent_permission)
+  #     puts 'Student created!'
+  #   elsif person_type == 2
+  #     print 'Specialization:'
+  #     specialization = gets.chomp
+  #     @people << Teacher.new(name, age, specialization)
+  #     puts 'Teacher created!'
+  #   else
+  #     puts 'Person not created!'
+  #   end
+  # end
 
   def create_a_book
     print 'Title:'

@@ -8,6 +8,6 @@ class List
       puts "| #{choice}. #{action} |"
     end
 
-    print 'Enter option: '
+    # print 'Enter option: '
   end
 end
