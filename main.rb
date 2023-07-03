@@ -1,53 +1,33 @@
 require_relative 'app'
-require_relative 'lib/display.rb'
+require_relative 'lib/display'
+require_relative 'lib/choice'
+require_relative 'lib/list'
 
-MENU = Display.new().display_options
-puts MENU
-
-def handle_menu_choice(choice, app)
-  action = MENU[choice]
-  if action
-    puts "\n========== #{action} =========="
-    app.send(action)
-  else
-    puts 'Invalid choice. Please try again.'
-  end
-end
+MENU = Display.new.options
 
 def exit_app
   puts 'Exiting the app. Goodbye!'
   exit
 end
 
-def list
-  puts "\n========== Libary App =========="
-  puts '+--------------------------------------+'
-  puts '|              DISPLAY MENU             |'
-  puts '+--------------------------------------+'
-  MENU.each do |choice, action|
-    puts "| #{choice}. #{action} |"
-  end
-end
-
 def main
   app = App.new
 
-  list
-
-  print 'Enter option: '
+  List.new.list_options(MENU)
 
   choice = gets.chomp.to_i
 
-  handle_menu_choice(choice, app)
+  Choice.new.handle_menu_choice(MENU, choice, app)
 
   # Loop until the user quits.
   while choice != 8
-    list
+    List.new.list_options(MENU)
+
     puts 'Enter option: '
 
     choice = gets.chomp.to_i
 
-    handle_menu_choice(choice, app)
+    Choice.new.handle_menu_choice(MENU, choice, app)
   end
 end
 main

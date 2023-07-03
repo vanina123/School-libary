@@ -1,5 +1,5 @@
 class Display
-  def display_options
+  def options
     {
       1 => 'list_all_books',
       2 => 'list_all_people',
