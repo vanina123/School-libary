@@ -5,11 +5,6 @@ require_relative 'lib/list'
 
 MENU = Display.new.options
 
-def exit_app
-  puts 'Exiting the app. Goodbye!'
-  exit
-end
-
 def main
   app = App.new
 
