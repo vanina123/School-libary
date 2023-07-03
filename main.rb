@@ -1,19 +1,11 @@
 require_relative 'app'
-def display
-  {
-    1 => 'list_all_books',
-    2 => 'list_all_people',
-    3 => 'create_person',
-    4 => 'create_a_book',
-    5 => 'create_a_rental',
-    6 => 'list_all_rentals_for_a_given_person_id',
-    7 => 'quit'
-  }
-end
+require_relative 'lib/display.rb'
+
+MENU = Display.new().display_options
+puts MENU
 
 def handle_menu_choice(choice, app)
-  menu_options = display
-  action = menu_options[choice]
+  action = MENU[choice]
   if action
     puts "\n========== #{action} =========="
     app.send(action)
@@ -28,12 +20,11 @@ def exit_app
 end
 
 def list
-  menu_options = display
   puts "\n========== Libary App =========="
   puts '+--------------------------------------+'
   puts '|              DISPLAY MENU             |'
   puts '+--------------------------------------+'
-  menu_options.each do |choice, action|
+  MENU.each do |choice, action|
     puts "| #{choice}. #{action} |"
   end
 end
