@@ -1,62 +1,28 @@
 require_relative 'app'
-def display
-  {
-    1 => 'list_all_books',
-    2 => 'list_all_people',
-    3 => 'create_person',
-    4 => 'create_a_book',
-    5 => 'create_a_rental',
-    6 => 'list_all_rentals_for_a_given_person_id',
-    7 => 'quit'
-  }
-end
+require_relative 'lib/display'
+require_relative 'lib/choice'
+require_relative 'lib/list'
 
-def handle_menu_choice(choice, app)
-  menu_options = display
-  action = menu_options[choice]
-  if action
-    puts "\n========== #{action} =========="
-    app.send(action)
-  else
-    puts 'Invalid choice. Please try again.'
-  end
-end
-
-def exit_app
-  puts 'Exiting the app. Goodbye!'
-  exit
-end
-
-def list
-  menu_options = display
-  puts "\n========== Libary App =========="
-  puts '+--------------------------------------+'
-  puts '|              DISPLAY MENU             |'
-  puts '+--------------------------------------+'
-  menu_options.each do |choice, action|
-    puts "| #{choice}. #{action} |"
-  end
-end
+MENU = Display.new.options
 
 def main
   app = App.new
 
-  list
-
-  print 'Enter option: '
+  List.new.list_options(MENU)
 
   choice = gets.chomp.to_i
 
-  handle_menu_choice(choice, app)
+  Choice.new.handle_menu_choice(MENU, choice, app)
 
   # Loop until the user quits.
   while choice != 8
-    list
+    List.new.list_options(MENU)
+
     puts 'Enter option: '
 
     choice = gets.chomp.to_i
 
-    handle_menu_choice(choice, app)
+    Choice.new.handle_menu_choice(MENU, choice, app)
   end
 end
 main
