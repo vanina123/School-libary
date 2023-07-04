@@ -5,11 +5,11 @@ require_relative 'teacher'
 require_relative 'book'
 require_relative 'rental'
 require_relative 'lib/save_data.rb'
-
+require_relative 'lib/load_data.rb'
 class App
   def initialize
     @people = []
-    @books = []
+    @books = load_books
     @rentals = []
   end
 
