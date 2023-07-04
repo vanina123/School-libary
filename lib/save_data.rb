@@ -8,7 +8,7 @@ end
 
 def save(data_array, name)
   return if data_array.empty?
-  if Dir.exists?("files") 
+  if Dir.exist?("files") 
     update(data_array, name)
   else
     Dir.mkdir("files")

@@ -8,7 +8,7 @@ require_relative 'lib/save_data.rb'
 require_relative 'lib/load_data.rb'
 class App
   def initialize
-    @people = []
+    @people = load_people
     @books = load_books
     @rentals = []
   end
