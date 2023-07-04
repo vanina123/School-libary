@@ -4,10 +4,13 @@ require_relative 'student'
 require_relative 'teacher'
 require_relative 'book'
 require_relative 'rental'
+require_relative 'lib/save_data.rb'
+
 class App
   def initialize
     @people = []
     @books = []
+    @rentals = []
   end
 
   def list_all_books
@@ -84,7 +87,7 @@ class App
     person = @people[person_index]
     puts 'Date in format yyyy/mm/dd:'
     date = gets.chomp
-    Rental.new(date, book, person)
+    @rentals << Rental.new(date, book, person)
     puts 'Rental created!'
   end
 
@@ -107,6 +110,73 @@ class App
 
   def quit
     puts 'existing the app. Goodbye'
+    save_books(@books)
+    save_people(@people)
+    save_rentals(@rentals)
     exit
+  end
+
+  def save_books(arr) 
+    new_arr = []
+    arr.each do |book|
+      obj = {
+        title: book.title,
+        author: book.author
+      }
+      new_arr << obj
+    end
+    save(new_arr, 'books')
+  end
+
+  def save_people(arr)
+    new_arr = []
+    arr.each do |person|
+      if person.class.name == 'Student'
+        obj = {
+          class: person.class,
+          id: person.id,
+          name: person.name,
+          age: person.age,
+          parent_permission: person.parent_permission,
+          rentals: person.rental
+        }
+        new_arr << obj
+      else 
+        obj = {
+          class: person.class,
+          id: person.id,
+          name: person.name,
+          age: person.age,
+          specialization: person.specialization,
+          rentals: person.rental
+        }
+        new_arr << obj
+      end
+    end
+    save(new_arr, 'people')
+  end
+
+  def save_rentals(arr)
+    new_arr = []
+    arr.each do |rental|
+      obj = {
+        date: rental.date,
+        book: {
+          title: rental.book.title,
+          author: rental.book.author,
+          rentals: rental.book.rental
+        },
+        person: {
+          class: rental.person.class,
+          id: rental.person.id,
+          name: rental.person.name,
+          age: rental.person.age,
+          parent_permission: rental.person.parent_permission,
+          rentals: rental.person.rental
+        }
+      }
+      new_arr << obj
+    end
+    save(new_arr, 'rentals')
   end
 end
