@@ -1,0 +1,22 @@
+[
+  {
+    "class": "Student",
+    "id": 334,
+    "name": "ncwuie",
+    "age": 23,
+    "parent_permission": true,
+    "rentals": [
+
+    ]
+  },
+  {
+    "class": "Teacher",
+    "id": 702,
+    "name": "nurec",
+    "age": 12,
+    "specialization": "nwuefh",
+    "rentals": [
+
+    ]
+  }
+]

@@ -1,0 +1,22 @@
+[
+  {
+    "date": "2022/12/12",
+    "book": {
+      "title": "vania",
+      "author": "nana",
+      "rentals": [
+        "#<Rental:0x000002481ecb6110>"
+      ]
+    },
+    "person": {
+      "class": "Student",
+      "id": 334,
+      "name": "ncwuie",
+      "age": 23,
+      "parent_permission": true,
+      "rentals": [
+        "#<Rental:0x000002481ecb6110>"
+      ]
+    }
+  }
+]
