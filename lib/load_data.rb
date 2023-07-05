@@ -21,8 +21,8 @@ def load_people
     file = File.read("files/people.json")
     file_data = JSON.parse(file)
     file_data.each do | person |
+        puts person['id']
         if person['class'] == "Student"
-            puts person.id
             new_arr << Student.new(person['name'], person['age'], nil, person['id'], parent_permission: person['parent_permission'])
         else
             new_arr << Teacher.new(person['name'], person['age'], person['specialization'], person['id'])
@@ -45,7 +45,7 @@ def load_rentals
                     Student.new(p['name'], p['age'], nil, p['id'], parent_permission: p['parent_permission'])
                 else
                     p = rental['person']
-                    Teacher.new(p['name'], p['age'], p['id'], p['specialization'])
+                    Teacher.new(p['name'], p['age'], p['specialization'], p['id'])
                 end
 
         new_arr << Rental.new(date, book, person)
