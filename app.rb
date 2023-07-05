@@ -8,20 +8,20 @@ require_relative 'lib/save_data.rb'
 require_relative 'lib/load_data.rb'
 class App
   def initialize
-    @people = load_people
     @books = load_books
-    @rentals = []
+    @people = load_people
+    @rentals = load_rentals
   end
 
   def list_all_books
     @books.each do |book|
-      puts "#{book.title} by #{book.author} on #{book.rental.count} rentals"
+      puts "#{book.title} by #{book.author} on #{book.rental == nil ? 0 : book.rental.count} rentals"
     end
   end
 
   def list_all_people
     @people.each do |person|
-      puts "[#{person.class}] Name: #{person.name}, ID: #{person.id}, , Age: #{person.age}"
+      puts "[#{person.class}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
     end
   end
 
@@ -44,7 +44,7 @@ class App
     age = get_user_input('Age: ').to_i
     parent_permission = get_user_input('What\'s the parent permission? (y/n) ').downcase == 'y'
 
-    @people << Student.new(name, age, parent_permission)
+    @people << Student.new(name, age, nil, parent_permission)
     puts 'Student created!'
   end
 
@@ -53,7 +53,7 @@ class App
     age = get_user_input('Age: ').to_i
     specialization = get_user_input('Specialization: ')
 
-    @people << Teacher.new(name, age, specialization)
+    @people << Teacher.new(name, age, specialization, nil)
     puts 'Teacher created!'
   end
 
@@ -81,7 +81,7 @@ class App
     book = @books[book_index]
     puts 'Choose a person from the list by number: (not Id)'
     @people.each_with_index do |person, index|
-      puts "#{index}) [#{person.class}] Name: #{person.name}, ID: #{person.age}, Age: #{person.age} "
+      puts "#{index}) [#{person.class}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age} "
     end
     person_index = gets.chomp.to_i
     person = @people[person_index]
@@ -121,7 +121,8 @@ class App
     arr.each do |book|
       obj = {
         title: book.title,
-        author: book.author
+        author: book.author,
+        rentals: book.rental
       }
       new_arr << obj
     end
