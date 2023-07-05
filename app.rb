@@ -4,8 +4,8 @@ require_relative 'student'
 require_relative 'teacher'
 require_relative 'book'
 require_relative 'rental'
-require_relative 'lib/save_data.rb'
-require_relative 'lib/load_data.rb'
+require_relative 'lib/save_data'
+require_relative 'lib/load_data'
 class App
   def initialize
     @books = load_books
@@ -15,7 +15,7 @@ class App
 
   def list_all_books
     @books.each do |book|
-      puts "#{book.title} by #{book.author} on #{book.rental == nil ? 0 : book.rental.count} rentals"
+      puts "#{book.title} by #{book.author} on #{book.rental.nil? ? 0 : book.rental.count} rentals"
     end
   end
 
@@ -116,13 +116,12 @@ class App
     exit
   end
 
-  def save_books(arr) 
+  def save_books(arr)
     new_arr = []
     arr.each do |book|
       obj = {
         title: book.title,
-        author: book.author,
-        rentals: book.rental
+        author: book.author
       }
       new_arr << obj
     end
@@ -132,27 +131,12 @@ class App
   def save_people(arr)
     new_arr = []
     arr.each do |person|
-      if person.class.name == 'Student'
-        obj = {
-          class: person.class,
-          id: person.id,
-          name: person.name,
-          age: person.age,
-          parent_permission: person.parent_permission,
-          rentals: person.rental
-        }
-        new_arr << obj
-      else 
-        obj = {
-          class: person.class,
-          id: person.id,
-          name: person.name,
-          age: person.age,
-          specialization: person.specialization,
-          rentals: person.rental
-        }
-        new_arr << obj
-      end
+      obj = if person.instance_of?(::Student)
+              obj_student(person)
+            else
+              obj_teacher(person)
+            end
+      new_arr << obj
     end
     save(new_arr, 'people')
   end
@@ -160,24 +144,50 @@ class App
   def save_rentals(arr)
     new_arr = []
     arr.each do |rental|
-      obj = {
-        date: rental.date,
-        book: {
-          title: rental.book.title,
-          author: rental.book.author,
-          rentals: rental.book.rental
-        },
-        person: {
-          class: rental.person.class,
-          id: rental.person.id,
-          name: rental.person.name,
-          age: rental.person.age,
-          parent_permission: rental.person.parent_permission,
-          rentals: rental.person.rental
-        }
-      }
+      obj = rental_obj(rental)
       new_arr << obj
     end
     save(new_arr, 'rentals')
   end
+end
+
+def obj_student(person)
+  {
+    class: person.class,
+    id: person.id,
+    name: person.name,
+    age: person.age,
+    parent_permission: person.parent_permission,
+    rentals: person.rental
+  }
+end
+
+def obj_teacher(person)
+  {
+    class: person.class,
+    id: person.id,
+    name: person.name,
+    age: person.age,
+    specialization: person.specialization,
+    rentals: person.rental
+  }
+end
+
+def rental_obj(rental)
+  {
+    date: rental.date,
+    book: {
+      title: rental.book.title,
+      author: rental.book.author,
+      rentals: rental.book.rental
+    },
+    person: {
+      class: rental.person.class,
+      id: rental.person.id,
+      name: rental.person.name,
+      age: rental.person.age,
+      parent_permission: rental.person.parent_permission,
+      rentals: rental.person.rental
+    }
+  }
 end
