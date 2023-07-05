@@ -4,21 +4,24 @@ require_relative 'student'
 require_relative 'teacher'
 require_relative 'book'
 require_relative 'rental'
+require_relative 'lib/save_data'
+require_relative 'lib/load_data'
 class App
   def initialize
-    @people = []
-    @books = []
+    @books = load_books
+    @people = load_people
+    @rentals = load_rentals
   end
 
   def list_all_books
     @books.each do |book|
-      puts "#{book.title} by #{book.author} on #{book.rental.count} rentals"
+      puts "#{book.title} by #{book.author} on #{book.rental.nil? ? 0 : book.rental.count} rentals"
     end
   end
 
   def list_all_people
     @people.each do |person|
-      puts "[#{person.class}] Name: #{person.name}, ID: #{person.id}, , Age: #{person.age}"
+      puts "[#{person.class}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
     end
   end
 
@@ -41,7 +44,7 @@ class App
     age = get_user_input('Age: ').to_i
     parent_permission = get_user_input('What\'s the parent permission? (y/n) ').downcase == 'y'
 
-    @people << Student.new(name, age, parent_permission)
+    @people << Student.new(name, age, nil, parent_permission)
     puts 'Student created!'
   end
 
@@ -50,7 +53,7 @@ class App
     age = get_user_input('Age: ').to_i
     specialization = get_user_input('Specialization: ')
 
-    @people << Teacher.new(name, age, specialization)
+    @people << Teacher.new(name, age, specialization, nil)
     puts 'Teacher created!'
   end
 
@@ -78,13 +81,13 @@ class App
     book = @books[book_index]
     puts 'Choose a person from the list by number: (not Id)'
     @people.each_with_index do |person, index|
-      puts "#{index}) [#{person.class}] Name: #{person.name}, ID: #{person.age}, Age: #{person.age} "
+      puts "#{index}) [#{person.class}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age} "
     end
     person_index = gets.chomp.to_i
     person = @people[person_index]
     puts 'Date in format yyyy/mm/dd:'
     date = gets.chomp
-    Rental.new(date, book, person)
+    @rentals << Rental.new(date, book, person)
     puts 'Rental created!'
   end
 
@@ -107,6 +110,84 @@ class App
 
   def quit
     puts 'existing the app. Goodbye'
+    save_books(@books)
+    save_people(@people)
+    save_rentals(@rentals)
     exit
   end
+
+  def save_books(arr)
+    new_arr = []
+    arr.each do |book|
+      obj = {
+        title: book.title,
+        author: book.author
+      }
+      new_arr << obj
+    end
+    save(new_arr, 'books')
+  end
+
+  def save_people(arr)
+    new_arr = []
+    arr.each do |person|
+      obj = if person.instance_of?(::Student)
+              obj_student(person)
+            else
+              obj_teacher(person)
+            end
+      new_arr << obj
+    end
+    save(new_arr, 'people')
+  end
+
+  def save_rentals(arr)
+    new_arr = []
+    arr.each do |rental|
+      obj = rental_obj(rental)
+      new_arr << obj
+    end
+    save(new_arr, 'rentals')
+  end
+end
+
+def obj_student(person)
+  {
+    class: person.class,
+    id: person.id,
+    name: person.name,
+    age: person.age,
+    parent_permission: person.parent_permission,
+    rentals: person.rental
+  }
+end
+
+def obj_teacher(person)
+  {
+    class: person.class,
+    id: person.id,
+    name: person.name,
+    age: person.age,
+    specialization: person.specialization,
+    rentals: person.rental
+  }
+end
+
+def rental_obj(rental)
+  {
+    date: rental.date,
+    book: {
+      title: rental.book.title,
+      author: rental.book.author,
+      rentals: rental.book.rental
+    },
+    person: {
+      class: rental.person.class,
+      id: rental.person.id,
+      name: rental.person.name,
+      age: rental.person.age,
+      parent_permission: rental.person.parent_permission,
+      rentals: rental.person.rental
+    }
+  }
 end
