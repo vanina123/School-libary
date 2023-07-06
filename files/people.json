@@ -18,5 +18,15 @@
     "rentals": [
 
     ]
+  },
+  {
+    "class": "Teacher",
+    "id": 702,
+    "name": "njuguna",
+    "age": 34,
+    "specialization": "mines",
+    "rentals": [
+      "#<Rental:0x00005593f8631cf8>"
+    ]
   }
 ]

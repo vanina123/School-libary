@@ -1,16 +1,16 @@
-require_relative '../teacher.rb'
-require_relative '../person.rb'
+require_relative '../teacher'
+require_relative '../person'
 
 describe Teacher do
-  let(:name) { "John Doe" }
+  let(:name) { 'John Doe' }
   let(:age) { 30 }
-  let(:specialization) { "Mathematics" }
-  let(:id) { 12345 }
+  let(:specialization) { 'Mathematics' }
+  let(:id) { 12_345 }
 
   subject(:teacher) { Teacher.new(name, age, specialization, id) }
 
-  describe "#initialize" do
-    it "sets the name, age, specialization, and id" do
+  describe '#initialize' do
+    it 'sets the name, age, specialization, and id' do
       expect(teacher.name).to eq(name)
       expect(teacher.age).to eq(age)
       expect(teacher.specialization).to eq(specialization)
@@ -18,8 +18,8 @@ describe Teacher do
     end
   end
 
-  describe "#can_use_services" do
-    it "returns true" do
+  describe '#can_use_services' do
+    it 'returns true' do
       expect(teacher.can_use_services).to be true
     end
   end
