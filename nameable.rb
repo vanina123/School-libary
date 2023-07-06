@@ -1,19 +1,6 @@
-class Nameable < Object
+class Nameable
   def correct_name
-    raise NotImplementedError
-  end
-end
-
-class Person < Nameable
-  attr_reader :name
-
-  def initialize(name)
-    super()
-    @name = name
-  end
-
-  def correct_name
-    @name
+    raise NotImplementedError, "#{self.class} has not implemented method '#{__method__}'"
   end
 end
 
@@ -45,9 +32,3 @@ class TrimmerDecorator < Decorator
     end
   end
 end
-
-person = Person.new('John Doe')
-
-decorated_person = CapitalizeDecorator.new(TrimmerDecorator.new(person))
-
-puts decorated_person.correct_name # => "John"

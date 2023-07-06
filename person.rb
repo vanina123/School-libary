@@ -1,4 +1,7 @@
-class Person
+require_relative 'nameable'
+require_relative 'rental'
+
+class Person < Nameable
   attr_reader :id
   attr_accessor :name, :age, :rental, :parent_permission
 
@@ -8,6 +11,7 @@ class Person
     @age = age || 0
     @parent_permission = parent_permission
     @rental = []
+    super()
   end
 
   private
@@ -20,6 +24,10 @@ class Person
 
   def can_use_services?
     of_age? || @parent_permission
+  end
+
+  def correct_name
+    @name
   end
 
   def add_rental(date, book)

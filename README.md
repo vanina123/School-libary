@@ -89,6 +89,15 @@ ruby teacher.rb
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+### Testing 🧪
+To run tests do the following
+
+```ssh
+  gem install rspec
+  rspec spec
+```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ###👥 Authors <a name="authors"></a>
 

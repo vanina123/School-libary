@@ -1,0 +1,44 @@
+[
+  {
+    "date": "2022/12/12",
+    "book": {
+      "title": "vania",
+      "author": "nana",
+      "rentals": [
+        "#<Rental:0x00005593f861dc30>"
+      ]
+    },
+    "person": {
+      "class": "Student",
+      "id": 334,
+      "name": "ncwuie",
+      "age": 23,
+      "parent_permission": true,
+      "rentals": [
+        "#<Rental:0x00005593f861dc30>"
+      ]
+    }
+  },
+  {
+    "date": "12/12/12",
+    "book": {
+      "title": "mines",
+      "author": "man",
+      "rentals": [
+        "#<Rental:0x00005593f8631cf8>"
+      ]
+    },
+    "person": {
+      "class": "Teacher",
+      "id": 702,
+      "name": "njuguna",
+      "age": 34,
+      "parent_permission": {
+        "parent_permission": true
+      },
+      "rentals": [
+        "#<Rental:0x00005593f8631cf8>"
+      ]
+    }
+  }
+]
